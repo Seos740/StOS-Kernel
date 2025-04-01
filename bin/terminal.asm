@@ -15,10 +15,6 @@ print_char:
     inc esi
     jmp print_char
 
-read_keyboard:
-    
-    
-
 msg:
     db 'Welcome to StOS!', 0x0d, 0x0a, 'StOS $ ', 0
 newcommand:
