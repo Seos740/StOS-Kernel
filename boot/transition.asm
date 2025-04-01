@@ -37,7 +37,7 @@ start:
 
     jmp 0x08:protected_mode
 
-BITS 32
+[bits 32]
 protected_mode:
     mov ax, 0x10
     mov ds, ax
@@ -49,7 +49,6 @@ protected_mode:
     mov esp, 0x90000
     mov ebp, esp
 
-    hlt
+    jmp 0x300000
 
-    times 510-($-$$) db 0
-    dw 0xAA55
+   
