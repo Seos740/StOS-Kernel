@@ -3,7 +3,7 @@
     "ProcName": ".KernelTask",
     "ProcID": 0,
     "Directory": "file://bin/terminal.bin",
-    "ProcPriority": 1,
+    "ProcPriority": 0,
     "Ring": 0,
     "BitsLevel": 32,
     "RamRequirementMB": 16,
