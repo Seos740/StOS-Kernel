@@ -1,7 +1,7 @@
 
 {
     "ProcName": ".KernelTask",
-    "ProcID": 1,
+    "ProcID": 0,
     "Directory": "file://bin/terminal.bin",
     "ProcPriority": 1,
     "Ring": 0,
