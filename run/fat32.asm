@@ -40,6 +40,7 @@ FAT32_DirectoryEntry:
 
 Global FindFileOrDirectory:
     mov esi, directory_start
+    mov edi, file_name
     mov ecx, 0
 
 SearchLoop:
@@ -48,10 +49,11 @@ SearchLoop:
     je NoFileFound
     cmp byte [esi], 0xE5
     je SkipEntry
+
     lea edi, [FAT32_DirectoryEntry]
-    lea esi, [esi]
     call CompareFilenames
     je FileFound
+
     add esi, 32
     inc ecx
     cmp ecx, max_entries
@@ -66,7 +68,7 @@ NoFileFound:
     ret
 
 FileFound:
-    cmp byte [esi+11], 0x10
+    cmp byte [esi + 11], 0x10
     je DirectoryFound
     call DisplayFileName
     ret
@@ -99,4 +101,7 @@ FilenamesMatch:
     ret
 
 directory_start:
-    ret
+    db "/proc", 0
+
+file_name:
+    db "proc_table.txt", 0
