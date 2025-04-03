@@ -34,11 +34,24 @@ add_data_two:
     mov edx, [eax]
     mov [ecx], edx
     cmp eax, 0
-    je add_data_two_pre
+    je add_data_three_pre
     inc eax
-    jmp add_data_one
+    jmp add_data_two
 
-; Finish Code Later
+add_data_three_pre:
+
+    ; Add pointer to proccess id here
+    mov eax, proc_ring
+
+add_data_three:
+    mov edx, [eax]
+    mov [ecx], edx
+    cmp eax, 0
+    je add_data_three_pre
+    inc eax
+    jmp add_data_two
+
+    ; Add pointer to proccess's ring over here
 
 FileNotFound:
     mov ebx, 1
