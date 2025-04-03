@@ -25,9 +25,19 @@ add_data_one:
     inc eax
     jmp add_data_one
 
-add_data_two_pre:
+add_data_two_pre:    
 
-    ; Add pointer to proccess name here
+    proc_name_loop:
+
+    mov edx, [eax]
+    mov [ebx], edx
+    mov [edx], edi
+    cmp edi, 0
+    je cont_one
+    inc eax
+    jmp proc_name_loop
+
+    cont_one:
     mov eax, proc_id_start
 
 add_data_two:
@@ -40,7 +50,18 @@ add_data_two:
 
 add_data_three_pre:
 
-    ; Add pointer to proccess id here
+    proc_id_loop:
+    
+    mov edx, [eax]
+    mov [ebx], edx
+    mov [edx], ebp
+    cmp ebp, 0
+    je cont_two
+    inc eax
+    jmp proc_id_loop
+
+    cont_two:
+
     mov eax, proc_ring
 
 add_data_three:
@@ -51,7 +72,18 @@ add_data_three:
     inc eax
     jmp add_data_two
 
-    ; Add pointer to proccess's ring over here
+    proc_ring_loop:
+    
+    mov edx, [eax]
+    mov [ebx], edx
+    mov [edx], esp
+    cmp esp, 0
+    je cont_three
+    inc eax
+    jmp proc_ring_loop
+
+    cont_three:
+    ret
 
 FileNotFound:
     mov ebx, 1
