@@ -38,7 +38,7 @@ fat32_init:
 FAT32_DirectoryEntry:
     db "MYFILE  TXT"
 
-FindFileOrDirectory:
+Global FindFileOrDirectory:
     mov esi, directory_start
     mov ecx, 0
 
@@ -81,7 +81,7 @@ DisplayFileName:
 DisplayDirectoryName:
     ret
 
-CompareFilenames:
+Global CompareFilenames:
     mov al, [edi]
     mov bl, [esi]
     cmp al, bl

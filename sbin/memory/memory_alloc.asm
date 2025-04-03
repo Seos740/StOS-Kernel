@@ -5,7 +5,7 @@ global UserObtainMemory:
     mov eax, 0x19A00000
 
 scan_memory:
-    cmp eax, FreeStart
+    cmp eax, kernel_end
     jge end_scan
 
     mov ebx, [eax]
@@ -16,14 +16,27 @@ scan_memory:
     jmp scan_memory
 
 found_empty:
-    mov ebx, eax
-    mov edx, eax
+    mov ebx, [eax]
+    mov edx, [eax]
+    inc ebx
+    add edx, 17
 
+    jmp toMem
+
+toMem:
+    mov [eax], ebx
     inc eax
-    jmp scan_memory
+    mov [eax], edx
+
+    mov ebx, 0
+
+    ret
 
 end_scan:
-    kernel_start:
+    mov ebx, 1
+    ret
+
+kernel_start:
     dd 0x00000000
 kernel_end: 
     dd 0x20000000
