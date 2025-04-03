@@ -1,0 +1,12 @@
+
+{
+    "ProcName": ".KernelTask",
+    "ProcID": 0,
+    "Directory": "file://bin/terminal.bin",
+    "ProcPriority": 0,
+    "Ring": 0,
+    "BitsLevel": 32,
+    "RamRequirementMB": 16,
+    "ExecPerms": 0, 
+    "RunAsUser": "root"
+}  

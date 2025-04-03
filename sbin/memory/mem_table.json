@@ -1,0 +1,32 @@
+[
+    {
+        "Type": "Kernel",
+        "MemoryStart": "0x00000000",
+        "MemoryEnd": "0x20000000"
+    },
+    {
+        "Type": "KernelDriver",
+        "MemoryStart": "0x20000001",
+        "MemoryEnd": "0x22000000"
+    },
+    {
+        "Type": "Ring1Driver",
+        "MemoryStart": "0x22000001",
+        "MemoryEnd": "0x24000000"
+    },
+    {
+        "Type": "Ring2Driver",
+        "MemoryStart": "0x24000001",
+        "MemoryEnd": "0x26000000"
+    },
+    {
+        "Type": "User",
+        "MemoryStart": "0x26000001",
+        "MemoryEnd": "0xF4000000"
+    },
+    {
+        "Type": "Free",
+        "MemoryStart": "0xF4000001",
+        "MemoryEnd": "0xFFFFFFFF"
+    }
+]
