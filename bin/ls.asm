@@ -1,5 +1,8 @@
 [bits 32]
-[extern fat32_init, FindFileOrDirectory, DisplayFileName, DisplayDirectoryName]
+[extern fat32_init]
+[extern FindFileOrDirectory]
+[extern DisplayFileName]
+[extern DisplayDirectoryName]
 
 lea esi, [filename]
 lea edi, [directory_start]

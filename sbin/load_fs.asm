@@ -1,22 +1,35 @@
 [bits 32]
-[org 0x200000]
-[extern fat32_init, FindFileOrDirectory, DisplayFileName, DisplayDirectoryName]
 
-call fat32_init 
+; org 0x200000   . Set the origin address of the program (you may adjust this)
 
-lea esi, [filename]         
-lea edi, [directory_start]  
-mov ecx, [max_entries]      
-call FindFileOrDirectory
+; Declare external functions
+extern fat32_init
+extern FindFileOrDirectory
+extern DisplayFileName
+extern DisplayDirectoryName
+extern LoadFileIntoMemory
 
-lea esi, [filename]         
-mov edi, [load_address]     
-call LoadFileIntoMemory
+; Start of the program
+_start:
+    ; Call fat32_init to initialize the FAT32 file system
+    call fat32_init 
 
-jmp dword [load_address]    
+    ; Set up for FindFileOrDirectory
+    lea esi, [filename]      ; Load the address of the filename into ESI
+    lea edi, [directory_start] ; Load the address of the directory start into EDI
+    mov ecx, [max_entries]   ; Load max_entries value into ECX
+    call FindFileOrDirectory  ; Call the external function
 
+    ; Set up for LoadFileIntoMemory
+    lea esi, [filename]      ; Load the address of the filename into ESI
+    mov edi, [load_address]  ; Load the load address into EDI
+    call LoadFileIntoMemory  ; Call the external function
 
-filename db "/bin/terminal.bin", 0  
-directory_start dd 0x100000         
-max_entries dd 128                  
-load_address dd 0x200000             
+    ; Jump to the loaded address to execute the file
+    jmp dword [load_address]    
+
+; Data section
+filename db "/bin/terminal.bin", 0  ; Null-terminated filename
+directory_start dd 0x100000         ; Directory start address
+max_entries dd 128                  ; Max number of directory entries to search
+load_address dd 0x200000            ; Memory address to load the file into

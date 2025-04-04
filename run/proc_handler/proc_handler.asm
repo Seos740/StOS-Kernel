@@ -1,5 +1,10 @@
 [bits 32]
 
+[extern fat32_init]
+[extern FindFileOrDirectory]
+[extern DisplayFileName]
+[extern DisplayDirectoryName]
+
 global Proc_Create
 
 Proc_Create:
@@ -83,6 +88,10 @@ add_data_three:
     jmp proc_ring_loop
 
     cont_three:
+    ret
+
+add_data:
+    ; my implementation will be here
     ret
 
 FileNotFound:

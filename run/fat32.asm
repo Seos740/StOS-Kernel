@@ -1,6 +1,9 @@
-[bits 32]
-[global fat32_init]
+; Declare global functions before their definitions
+global fat32_init, CompareFilenames, FindFileOrDirectory
 
+[bits 32]
+
+; FAT32 boot sector definition
 FAT32_BootSector:
     db 0xEB, 0x58, 0x90
     db "MSWIN4.1"
@@ -17,6 +20,7 @@ FAT32_BootSector:
     dd 0x00000000
     dd 0x00000000
 
+; Read sector function
 ReadSector:
     mov ah, 0x02
     int 0x13
@@ -26,6 +30,7 @@ ReadSector:
 ReadError:
     jmp $
 
+; FAT32 Initialization function
 fat32_init:
     mov dl, 0x80
     mov ch, 0
@@ -35,10 +40,12 @@ fat32_init:
     call ReadSector
     ret
 
+; Directory entry (for use later)
 FAT32_DirectoryEntry:
     db "MYFILE  TXT"
 
-Global FindFileOrDirectory:
+; File search function
+FindFileOrDirectory:
     mov esi, directory_start
     mov edi, file_name
     mov ecx, 0
@@ -77,13 +84,15 @@ DirectoryFound:
     call DisplayDirectoryName
     ret
 
+; Display functions (you can implement later)
 DisplayFileName:
     ret
 
 DisplayDirectoryName:
     ret
 
-Global CompareFilenames:
+; Compare filenames function
+CompareFilenames:
     mov al, [edi]
     mov bl, [esi]
     cmp al, bl
@@ -100,8 +109,14 @@ FilenamesDoNotMatch:
 FilenamesMatch:
     ret
 
+; Maximum number of entries for directory search
+max_entries:
+    dd 10  ; You can set this to the number of directory entries to search
+
+; Starting directory
 directory_start:
     db "/proc", 0
 
+; File to search for
 file_name:
     db "proc_table.txt", 0

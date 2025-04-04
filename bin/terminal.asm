@@ -3,8 +3,8 @@
 mov al, 0x03
 out 0x03C8, al
 
-mov edi, 0xB8000
-mov esi, msg
+mov edi, 0xB8000 ;text memory
+mov esi, msg ;string pointer
 
 print_char:
     mov al, [esi]
