@@ -4,6 +4,8 @@ StOS is a custom kernel project related to the SbOS and SoUP projects. It featur
 
 **Features**
 
+Basic Memory And Process Management
+
 UNIX-Like Directory Structure
 
 Command-Line Interface Support (Coming Soon)
