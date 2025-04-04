@@ -23,12 +23,12 @@ newcommand:
     db 0x0d, 0x0a, 'StOS $ ', 0
 
 read_keyboard:
-    cmp eax, 0x1c
-    je print_new_command
-    mov ah, 0x0F      
-    mov word [edi], ax
-    add edi, 2        
-    iret
+    cmp eax, 0x1c ;0x1c = enter key
+    je print_new_command ;jump if enter key is pressed
+    mov ah, 0x0F   ;white text thing    
+    mov word [edi], ax ; ax = ah + al, moves the character into video memory
+    add edi, 2   ;Prepare for next character      
+    iret ;return to caller to recive next character
 
 print_new_command:
     mov esi, newcommand
