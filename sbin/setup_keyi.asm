@@ -1,7 +1,7 @@
 [bits 32]
 [org 0x300000]
 
-cli
+cli 
 
 mov al, 0x11
 out 0x20, al

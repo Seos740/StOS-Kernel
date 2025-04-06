@@ -1,10 +1,8 @@
-; Declare global functions before their definitions
 global fat32_init, CompareFilenames, FindFileOrDirectory
 
 [bits 32]
 
-; FAT32 boot sector definition
-FAT32_BootSector:
+FAT32_BootSector: 
     db 0xEB, 0x58, 0x90
     db "MSWIN4.1"
     dw 0x0200
@@ -20,7 +18,6 @@ FAT32_BootSector:
     dd 0x00000000
     dd 0x00000000
 
-; Read sector function
 ReadSector:
     mov ah, 0x02
     int 0x13
@@ -30,7 +27,6 @@ ReadSector:
 ReadError:
     jmp $
 
-; FAT32 Initialization function
 fat32_init:
     mov dl, 0x80
     mov ch, 0
@@ -40,68 +36,64 @@ fat32_init:
     call ReadSector
     ret
 
-; Directory entry (for use later)
 FAT32_DirectoryEntry:
     db "MYFILE  TXT"
 
-; File search function
 FindFileOrDirectory:
-    mov esi, directory_start
-    mov edi, file_name
-    mov ecx, 0
+    mov ecx, 0                ; Directory entry counter
 
 SearchLoop:
-    movzx eax, byte [esi]
-    cmp eax, 0x00
+    movzx eax, byte [esi]     ; Load byte from current directory entry (pointed by esi)
+    cmp eax, 0x00             ; Check if it's the end of directory (empty entry)
     je NoFileFound
-    cmp byte [esi], 0xE5
+    cmp byte [esi], 0xE5      ; Check if it's a deleted entry
     je SkipEntry
 
-    lea edi, [FAT32_DirectoryEntry]
-    call CompareFilenames
+    lea edi, [FAT32_DirectoryEntry] ; Load address of the filename to compare
+    call CompareFilenames            ; Compare filenames
     je FileFound
 
-    add esi, 32
-    inc ecx
-    cmp ecx, max_entries
+    add esi, 32               ; Move to the next directory entry (32 bytes per entry)
+    inc ecx                   ; Increment entry count
+    cmp ecx, max_entries      ; Check if we've exceeded max entries
     jl SearchLoop
     jmp NoFileFound
 
 SkipEntry:
-    add esi, 32
+    add esi, 32               ; Skip to the next entry
     jmp SearchLoop
 
 NoFileFound:
     ret
 
 FileFound:
-    cmp byte [esi + 11], 0x10
-    je DirectoryFound
-    call DisplayFileName
+    ; Extract the starting cluster from the directory entry (offset 0x1A and 0x1C)
+    movzx eax, word [esi + 0x1A]   ; Load the low 16 bits of the starting cluster
+    movzx ebx, word [esi + 0x1C]   ; Load the high 16 bits of the starting cluster
+    shl ebx, 16                    ; Shift the high 16 bits to the left
+    or eax, ebx                    ; Combine the low and high parts of the cluster number
+
+    ; Now eax contains the starting cluster of the found file
+    ; You can now use eax to access the file's starting cluster
+
     ret
 
-DirectoryFound:
-    call DisplayDirectoryName
-    ret
-
-; Display functions (you can implement later)
 DisplayFileName:
     ret
 
 DisplayDirectoryName:
     ret
 
-; Compare filenames function
 CompareFilenames:
-    mov al, [edi]
-    mov bl, [esi]
-    cmp al, bl
-    jne FilenamesDoNotMatch
-    inc edi
-    inc esi
-    cmp byte [edi], 0
-    je FilenamesMatch
-    jmp CompareFilenames
+    mov al, [edi]               ; Load byte from directory entry filename
+    mov bl, [esi]               ; Load byte from directory entry pointed by esi
+    cmp al, bl                  ; Compare the characters
+    jne FilenamesDoNotMatch     ; If they don't match, return
+    inc edi                     ; Move to the next character in filename
+    inc esi                     ; Move to the next character in directory entry
+    cmp byte [edi], 0           ; Check if end of string (NULL terminator)
+    je FilenamesMatch           ; If it matches, return
+    jmp CompareFilenames        ; Otherwise, continue comparing
 
 FilenamesDoNotMatch:
     ret
@@ -109,14 +101,5 @@ FilenamesDoNotMatch:
 FilenamesMatch:
     ret
 
-; Maximum number of entries for directory search
 max_entries:
-    dd 10  ; You can set this to the number of directory entries to search
-
-; Starting directory
-directory_start:
-    db "/proc", 0
-
-; File to search for
-file_name:
-    db "proc_table.txt", 0
+    dd 128                     ; Set this value to the number of directory entries to search
