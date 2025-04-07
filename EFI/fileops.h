@@ -4,7 +4,7 @@
 #include <efi.h>
 #include <efilib.h>
 
-// Include your existing .c scripts directly here
+
 #include "FileOp.c"
 #include "OpenFile.c"
 
