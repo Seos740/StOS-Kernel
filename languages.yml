@@ -1,0 +1,7 @@
+StOS-Executable:
+  type: programming
+  extensions:
+    - .exs
+  tm_scope: source.stos
+  ace_mode: text
+  color: "#ffcc00"
