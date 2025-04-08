@@ -1,3 +1,4 @@
 *.exs linguist-language=StOS-Executable
 *.tgan linguist-language=Trigan-Exec
 *.stscript linguist-language=StOS-Script
+
