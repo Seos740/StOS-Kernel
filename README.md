@@ -13,7 +13,6 @@
 
 </p>
 
-
 StOS Kernel
 
 StOS is a custom kernel project related to the SbOS and SoUP projects. It features a UNIX-like directory structure and is built with a focus on providing command-line support (coming soon) and GUI (coming soon). This project does not follow Linux conventions but creates its own distinct environment.
