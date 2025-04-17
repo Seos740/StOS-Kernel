@@ -1,3 +1,19 @@
+<p align="center">
+
+  <img src="https://img.shields.io/github/languages/code-size/Seos740/StOS-Kernel" />
+  <img src="https://img.shields.io/github/downloads/Seos740/StOS-Kernel/total" />
+
+  <a href="https://github.com/Seos740/StOS-Kernel/releases/latest">
+    <img src="https://img.shields.io/github/v/release/Seos740/StOS-Kernel" />
+  </a>
+
+  <a href="https://github.com/Seos740/StOS-Kernel/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/Seos740/StOS-Kernel" />
+  </a>
+
+</p>
+
+
 StOS Kernel
 
 StOS is a custom kernel project related to the SbOS and SoUP projects. It features a UNIX-like directory structure and is built with a focus on providing command-line support (coming soon) and GUI (coming soon). This project does not follow Linux conventions but creates its own distinct environment.
